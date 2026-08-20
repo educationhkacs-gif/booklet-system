@@ -38,6 +38,12 @@
     .cart-item-qty {
       max-width: 90px;
     }
+/* 統一小冊子列表按鈕大小與對齊 */
+.booklet-btn {
+  min-width: 85px !important;
+  text-align: center;
+  white-space: nowrap;
+}
   </style>
 </head>
 <body style="background-color: #f0f7f4;">
@@ -171,8 +177,8 @@ function renderBookletList(items) {
     div.className = "list-group-item d-flex justify-content-between align-items-center p-3";
     
     div.innerHTML = `
-      <div>
-        <div class="fw-bold fs-6">[${item.code || ''}] ${item.title || ''}</div>
+      <div class="me-2 text-truncate">
+        <div class="fw-bold fs-6 text-truncate">[${item.code || ''}] ${item.title || ''}</div>
         <div class="mt-1">
           <span class="badge badge-location me-2">📍 ${item.location || '未標記'}</span>
           <span class="badge ${isOutOfStock ? 'bg-danger' : 'bg-secondary'}">
@@ -180,7 +186,7 @@ function renderBookletList(items) {
           </span>
         </div>
       </div>
-      <button class="btn btn-sm btn-outline-success" 
+      <button class="btn btn-sm ${isOutOfStock ? 'btn-outline-secondary' : 'btn-outline-success'} booklet-btn flex-shrink-0" 
               onclick="addToCart('${item.id}')" 
               ${isOutOfStock ? 'disabled' : ''}>
         ${isOutOfStock ? '沒有存貨' : '+ 加入'}
