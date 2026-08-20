@@ -68,7 +68,7 @@
           <!-- 搜尋框 -->
           <div class="mb-3">
             <label class="form-label fw-bold">搜尋小冊子 / Search Booklet</label>
-            <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="輸入關鍵字或編號 (例: 營養 / CC)...">
+            <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="輸入關鍵字或編號 (例如: 營養 / CC)...">
           </div>
 
           <!-- 小冊子列表區塊 -->
@@ -181,7 +181,7 @@ function renderBookletList(items) {
         <!-- 書名會完整顯示，太長會自動換行 -->
         <div class="fw-bold fs-6 text-dark">[${item.code || ''}] ${item.title || ''}</div>
         <div class="mt-1">
-          <span class="badge badge-location me-2">📍 ${item.location || '未標記'}</span>
+          <span class="badge badge-location me-2">📍位置: ${item.location || '未標記'}</span>
           <span class="badge ${isOutOfStock ? 'bg-danger' : 'bg-secondary'}">
             存貨: ${stockNum} 本
           </span>
