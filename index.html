@@ -176,24 +176,25 @@ function renderBookletList(items) {
     const div = document.createElement("div");
     div.className = "list-group-item d-flex justify-content-between align-items-start p-3"; // align-items 改為 start
     
-    div.innerHTML = `
-      <div class="me-3"> <!-- 拿掉 text-truncate -->
-        <!-- 書名會完整顯示，太長會自動換行 -->
-        <div class="fw-bold fs-6 text-dark">[${item.code || ''}] ${item.title || ''}</div>
-        <div class="mt-1">
-          <span class="badge badge-location me-2">📍位置: ${item.location || '未標記'}</span>
-          <span class="badge ${isOutOfStock ? 'bg-danger' : 'bg-secondary'}">
-            存貨: ${stockNum} 本
-          </span>
-        </div>
-      </div>
-      <!-- 按鈕保持對齊右側頂部 -->
-      <button class="btn btn-sm ${isOutOfStock ? 'btn-outline-secondary' : 'btn-outline-success'} booklet-btn flex-shrink-0 mt-1" 
-              onclick="addToCart('${item.id}')" 
-              ${isOutOfStock ? 'disabled' : ''}>
-        ${isOutOfStock ? '沒有存貨' : '+ 加入'}
-      </button>
-    `;
+   div.innerHTML = `
+  <div class="me-3">
+    <!-- 書名完整顯示 -->
+    <div class="fw-bold fs-6 text-dark">[${item.code || ''}] ${item.title || ''}</div>
+    <!-- 位置與存貨標籤排在同一行 (加上 d-flex flex-wrap) -->
+    <div class="mt-1 d-flex flex-wrap align-items-center gap-1">
+      <span class="badge badge-location">📍位置: ${item.location || '未標記'}</span>
+      <span class="badge ${isOutOfStock ? 'bg-danger' : 'bg-secondary'}">
+        存貨: ${stockNum} 本
+      </span>
+    </div>
+  </div>
+  <!-- 右側按鈕 -->
+  <button class="btn btn-sm ${isOutOfStock ? 'btn-outline-secondary' : 'btn-outline-success'} booklet-btn flex-shrink-0 mt-1" 
+          onclick="addToCart('${item.id}')" 
+          ${isOutOfStock ? 'disabled' : ''}>
+    ${isOutOfStock ? '沒有存貨' : '+ 加入'}
+  </button>
+`;
     container.appendChild(div);
   });
 }
