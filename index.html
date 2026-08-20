@@ -176,13 +176,25 @@ function renderBookletList(items) {
   });
 }
 
-// 3. 關鍵字搜尋過濾
+// 3. 關鍵字搜尋過濾（修正中文與空格比對）
 function filterBooklets() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  const filtered = inventoryData.filter(item => 
-    (item.title && item.title.toLowerCase().includes(query)) || 
-    (item.code && item.code.toLowerCase().includes(query))
-  );
+  const rawInput = document.getElementById("searchInput").value;
+  // 去除前後空格並轉為小寫
+  const query = rawInput.trim().toLowerCase();
+
+  if (!query) {
+    renderBookletList(inventoryData);
+    return;
+  }
+
+  const filtered = inventoryData.filter(item => {
+    const title = (item.title || "").toString().toLowerCase();
+    const code = (item.code || "").toString().toLowerCase();
+    const location = (item.location || "").toString().toLowerCase();
+
+    return title.includes(query) || code.includes(query) || location.includes(query);
+  });
+
   renderBookletList(filtered);
 }
 
