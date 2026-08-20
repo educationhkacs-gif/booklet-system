@@ -48,7 +48,7 @@
           <!-- 搜尋框 -->
           <div class="mb-3">
             <label class="form-label fw-bold">搜尋小冊子 / Search Booklet</label>
-            <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="輸入關鍵字或編號 (例: 營養 / CC)..." onkeyup="filterBooklets()">
+            <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="輸入關鍵字或編號 (例: 營養 / CC)...">
           </div>
 
           <!-- 小冊子列表區塊 -->
@@ -176,10 +176,32 @@ function renderBookletList(items) {
   });
 }
 
-// 3. 關鍵字搜尋過濾（修正中文與空格比對）
+let isComposing = false; // 紀錄是否正在用輸入法組字中
+
+// 綁定搜尋框事件（完美支援手機中文輸入法）
+const searchInput = document.getElementById("searchInput");
+
+// 當開始用中文輸入法打字時
+searchInput.addEventListener("compositionstart", () => {
+  isComposing = true;
+});
+
+// 當中文選字完畢、正式印出中文字時
+searchInput.addEventListener("compositionend", () => {
+  isComposing = false;
+  filterBooklets(); // 選字完成即刻搜尋
+});
+
+// 一般即時輸入（適用於英文、數字，或完成選字後）
+searchInput.addEventListener("input", () => {
+  if (!isComposing) {
+    filterBooklets();
+  }
+});
+
+// 3. 關鍵字搜尋過濾
 function filterBooklets() {
   const rawInput = document.getElementById("searchInput").value;
-  // 去除前後空格並轉為小寫
   const query = rawInput.trim().toLowerCase();
 
   if (!query) {
